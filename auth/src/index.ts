@@ -1,12 +1,11 @@
+import { currentUserRouter } from './routes/current-user'
 import { json } from 'body-parser'
 import express from 'express'
 
 const app = express()
 app.use(json())
 
-app.get('/api/users/currentuser', (req, res) => {
-  res.send('Test use data')
-})
+app.use(currentUserRouter)
 
 const port = 3000
 app.listen(port, () => {
