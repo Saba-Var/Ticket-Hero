@@ -1,3 +1,4 @@
+import { errorHandler } from './middlewares/error-handler'
 import { currentUserRouter } from './routes/current-user'
 import { signOutRouter } from './routes/sign-out'
 import { signInRouter } from './routes/sign-in'
@@ -12,6 +13,8 @@ app.use(currentUserRouter)
 app.use(signInRouter)
 app.use(signUpRouter)
 app.use(signOutRouter)
+
+app.use(errorHandler)
 
 const port = 3000
 app.listen(port, () => {
