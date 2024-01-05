@@ -1,5 +1,6 @@
 import { errorHandler } from './middlewares/error-handler'
 import { currentUserRouter } from './routes/current-user'
+import { NotFoundError } from './errors/not-found-error'
 import { signOutRouter } from './routes/sign-out'
 import { signInRouter } from './routes/sign-in'
 import { signUpRouter } from './routes/sign-up'
@@ -13,6 +14,10 @@ app.use(currentUserRouter)
 app.use(signInRouter)
 app.use(signUpRouter)
 app.use(signOutRouter)
+
+app.all('*', () => {
+  throw new NotFoundError()
+})
 
 app.use(errorHandler)
 
