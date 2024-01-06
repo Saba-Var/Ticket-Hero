@@ -1,10 +1,17 @@
 import { signUpController } from '../controllers/sign-up-controller'
 import { signUpValidation } from '../validation/sign-up-validation'
+import { validateRequest } from '../middlewares/validateRequest'
+import { asyncHandler } from '../middlewares/asyncHandler'
 import express from 'express'
 
 const authRouter = express.Router()
 
-authRouter.post('/sign-up', signUpValidation, signUpController)
+authRouter.post(
+  '/sign-up',
+  signUpValidation,
+  validateRequest,
+  asyncHandler(signUpController)
+)
 
 authRouter.post('/sign-out', (_req, res) => {
   res.send('sign out route')
