@@ -1,6 +1,7 @@
 import { BadRequestError } from '../errors/bad-request-error'
 import type { Request, Response } from 'express'
 import { User } from '../models/user/user'
+import jwt from 'jsonwebtoken'
 
 export const signUpController = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -13,6 +14,18 @@ export const signUpController = async (req: Request, res: Response) => {
 
   const user = User.build({ email, password })
   await user.save()
+
+  const userJwt = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+    },
+    'temp-test-secret-key'
+  )
+
+  req.session = {
+    jwt: userJwt,
+  }
 
   res.status(201).send(user)
 }
