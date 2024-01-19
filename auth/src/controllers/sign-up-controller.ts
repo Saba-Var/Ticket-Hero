@@ -1,6 +1,6 @@
 import { BadRequestError } from '../errors/bad-request-error'
 import type { Request, Response } from 'express'
-import { User } from '../models/user'
+import { User } from '../models/user/user'
 
 export const signUpController = async (req: Request, res: Response) => {
   const { email, password } = req.body

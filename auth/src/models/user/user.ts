@@ -1,5 +1,5 @@
-import type { UserAttrs, UserDoc, UserModel } from './user.types'
-import { Password } from '../services/password'
+import type { UserAttrs, UserDoc, UserModel } from './types'
+import { Password } from '../../services/password'
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
