@@ -1,7 +1,13 @@
+import { currentUser as currentUserMiddleware } from '../middlewares/currentUser'
+import { currentUserController } from '../controllers/current-user-controller'
+import { signOutController } from '../controllers/sign-out-controller'
 import { signUpController } from '../controllers/sign-up-controller'
+import { signInController } from '../controllers/sign-in-controller'
+import { signInValidation } from '../validation/sign-in-validation'
 import { signUpValidation } from '../validation/sign-up-validation'
 import { validateRequest } from '../middlewares/validateRequest'
 import { asyncHandler } from '../middlewares/asyncHandler'
+import { requireAuth } from '../middlewares/require-auth'
 import express from 'express'
 
 const authRouter = express.Router()
@@ -13,16 +19,20 @@ authRouter.post(
   asyncHandler(signUpController)
 )
 
-authRouter.post('/sign-out', (_req, res) => {
-  res.send('sign out route')
-})
+authRouter.post(
+  '/sign-in',
+  signInValidation,
+  validateRequest,
+  asyncHandler(signInController)
+)
 
-authRouter.post('/sign-in', (_req, res) => {
-  res.send('sign in route')
-})
+authRouter.get(
+  '/current-user',
+  currentUserMiddleware,
+  requireAuth,
+  currentUserController
+)
 
-authRouter.get('/current-user', (_req, res) => {
-  res.send('Test user data')
-})
+authRouter.post('/sign-out', signOutController)
 
 export { authRouter }
