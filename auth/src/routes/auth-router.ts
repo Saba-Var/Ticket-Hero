@@ -7,6 +7,7 @@ import { signInValidation } from '../validation/sign-in-validation'
 import { signUpValidation } from '../validation/sign-up-validation'
 import { validateRequest } from '../middlewares/validateRequest'
 import { asyncHandler } from '../middlewares/asyncHandler'
+import { requireAuth } from '../middlewares/require-auth'
 import express from 'express'
 
 const authRouter = express.Router()
@@ -25,7 +26,12 @@ authRouter.post(
   asyncHandler(signInController)
 )
 
-authRouter.get('/current-user', currentUserMiddleware, currentUserController)
+authRouter.get(
+  '/current-user',
+  currentUserMiddleware,
+  requireAuth,
+  currentUserController
+)
 
 authRouter.post('/sign-out', signOutController)
 
