@@ -5,7 +5,7 @@ export interface UserAttrs {
   password: string
 }
 
-export interface UserModel extends mongoose.Model<unknown> {
+export interface UserModel extends mongoose.Model<UserAttrs> {
   build(attrs: UserAttrs): UserDoc
 }
 
