@@ -20,7 +20,7 @@ export const signUpController = async (req: Request, res: Response) => {
       id: user.id,
       email: user.email,
     },
-    'temp-test-secret-key'
+    process.env.JWT_KEY!
   )
 
   req.session = {
