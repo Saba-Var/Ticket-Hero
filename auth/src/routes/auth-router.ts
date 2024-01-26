@@ -1,3 +1,4 @@
+import { currentUser as currentUserMiddleware } from '../middlewares/currentUser'
 import { currentUserController } from '../controllers/current-user-controller'
 import { signOutController } from '../controllers/sign-out-controller'
 import { signUpController } from '../controllers/sign-up-controller'
@@ -24,7 +25,7 @@ authRouter.post(
   asyncHandler(signInController)
 )
 
-authRouter.get('/current-user', currentUserController)
+authRouter.get('/current-user', currentUserMiddleware, currentUserController)
 
 authRouter.post('/sign-out', signOutController)
 
