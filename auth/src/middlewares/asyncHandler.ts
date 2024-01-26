@@ -4,7 +4,7 @@ type AsyncHandlerFnParameter = (
   req: Request,
   res: Response,
   next: NextFunction
-) => Promise<void>
+) => Promise<void> | Promise<Response<unknown, Record<string, unknown>>>
 
 export const asyncHandler = (fn: AsyncHandlerFnParameter) => {
   return (req: Request, res: Response, next: NextFunction) => {
