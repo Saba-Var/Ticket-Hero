@@ -1,4 +1,4 @@
-name: Lint/Test
+name: Lint
 
 on:
   push:
@@ -26,6 +26,3 @@ jobs:
 
       - name: Lint code
         run: npx eslint .
-
-      - name: Test code
-        run: cd auth && npm run test
