@@ -28,4 +28,4 @@ jobs:
         run: npx eslint .
 
       - name: Test code
-        run: npm run test
+        run: cd auth && npm run test
