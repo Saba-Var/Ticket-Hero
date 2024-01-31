@@ -1,6 +1,10 @@
-import { loginRouteUrl, signUpRouteUrl, authCredentials } from './config'
 import request from 'supertest'
 import { app } from '../../app'
+import {
+  authCredentials,
+  signUpRouteUrl,
+  loginRouteUrl,
+} from '../../test/config'
 
 it('Returns a 422 status code with an invalid email', async () => {
   return request(app)

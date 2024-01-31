@@ -1,4 +1,4 @@
-import { signUpRouteUrl, authCredentials } from './config'
+import { signUpRouteUrl, authCredentials } from '../../test/config'
 import request from 'supertest'
 import { app } from '../../app'
 

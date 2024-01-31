@@ -1,11 +1,11 @@
 import request from 'supertest'
 import { app } from '../../app'
 import {
-  loginRouteUrl,
-  signUpRouteUrl,
   authCredentials,
   signOutRouteUrl,
-} from './config'
+  signUpRouteUrl,
+  loginRouteUrl,
+} from '../../test/config'
 
 it('Clears the cookie after signing out', async () => {
   await request(app).post(signUpRouteUrl).send(authCredentials).expect(201)

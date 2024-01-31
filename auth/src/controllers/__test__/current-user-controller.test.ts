@@ -1,19 +1,10 @@
+import { currentUserRouteUrl, authCredentials } from '../../test/config'
+import { getAuthCookie } from '../../test/utils'
 import request from 'supertest'
 import { app } from '../../app'
-import {
-  currentUserRouteUrl,
-  authCredentials,
-  signUpRouteUrl,
-  loginRouteUrl,
-} from './config'
 
 it('Return details about current authenticated user', async () => {
-  await request(app).post(signUpRouteUrl).send(authCredentials).expect(201)
-  const signInResponse = await request(app)
-    .post(loginRouteUrl)
-    .send(authCredentials)
-    .expect(200)
-  const cookie = signInResponse.get('Set-Cookie')
+  const cookie = await getAuthCookie()
   const currentUserResponse = await request(app)
     .get(currentUserRouteUrl)
     .set('Cookie', cookie)
