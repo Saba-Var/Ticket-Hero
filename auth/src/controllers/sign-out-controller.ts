@@ -2,5 +2,5 @@ import type { Request, Response } from 'express'
 
 export const signOutController = async (req: Request, res: Response) => {
   req.session = null
-  res.send({ message: 'Sign out successfully!' })
+  res.status(200).send({ message: 'Sign out successfully!' })
 }
