@@ -1,11 +1,10 @@
 <script setup>
-import { object, string } from 'yup'
+import { authSchema } from '~/schemas/authSchema'
 
-const schema = object({
-  email: string().email('Invalid email').required('Required'),
-  password: string()
-    .min(8, 'Must be at least 8 characters')
-    .required('Required'),
+const emit = defineEmits(['submitHandler'])
+const props = defineProps({
+  formTitle: String,
+  disabled: Boolean,
 })
 
 const form = ref()
@@ -13,11 +12,6 @@ const form = ref()
 const state = reactive({
   email: undefined,
   password: undefined,
-})
-
-const emit = defineEmits(['submitHandler'])
-const props = defineProps({
-  formTitle: String,
 })
 
 const formSubmitHandler = (_event) => {
@@ -30,8 +24,8 @@ const formSubmitHandler = (_event) => {
 
   <UForm
     @submit="formSubmitHandler($event)"
+    :schema="authSchema"
     class="space-y-4"
-    :schema="schema"
     :state="state"
     ref="form"
   >
@@ -43,6 +37,8 @@ const formSubmitHandler = (_event) => {
       <UInput v-model="state.password" type="password" />
     </UFormGroup>
 
-    <UButton type="submit">{{ props.formTitle }}</UButton>
+    <UButton :disabled="props.disabled" type="submit">{{
+      props.formTitle
+    }}</UButton>
   </UForm>
 </template>
