@@ -1,34 +1,27 @@
 <script setup>
-import { errorNotify, successNotify } from '~/utils/notifications'
+import { useNotification } from '~/composables/useNotification'
 import AuthForm from '~/components/shared/AuthForm.vue'
 import { signUpRequest } from '~/services/authRequest'
+import { useRequest } from '~/composables/useRequest'
 
-const toast = useToast()
+const { emitSuccessToast } = useNotification()
 
-const disabled = ref(false)
+const { sendRequest, loading } = useRequest()
 
 const submitHandler = async (state, form) => {
-  disabled.value = true
-  try {
-    const response = await signUpRequest(state)
-    if (response.status === 201) {
-      successNotify('You have successfully signed up.', toast)
-      form.reset()
-    } else {
-      throw new Error('Something went wrong.')
-    }
-  } catch (error) {
-    errorNotify(error, toast)
-  } finally {
-    disabled.value = false
-  }
+  sendRequest(() => signUpRequest(state), {
+    onSuccess: () => {
+      emitSuccessToast('You have successfully signed up.')
+      form.value.reset()
+    },
+  })
 }
 </script>
 
 <template>
   <AuthForm
     @submit-handler="submitHandler"
-    :disabled="disabled"
+    :disabled="loading"
     form-title="Sign up"
   ></AuthForm>
 </template>
