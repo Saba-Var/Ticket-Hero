@@ -1,6 +1,4 @@
 import { axiosConfig } from '~/config/axiosConfig'
-import axios from 'axios'
+import Axios from 'axios'
 
-const instance = axios.create(axiosConfig)
-
-export { instance as axios }
+export const axios = Axios.create(axiosConfig)

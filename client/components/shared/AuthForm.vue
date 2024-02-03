@@ -8,6 +8,8 @@ const schema = object({
     .required('Required'),
 })
 
+const form = ref()
+
 const state = reactive({
   email: undefined,
   password: undefined,
@@ -17,16 +19,21 @@ const emit = defineEmits(['submitHandler'])
 const props = defineProps({
   formTitle: String,
 })
+
+const formSubmitHandler = (_event) => {
+  emit('submitHandler', state, form)
+}
 </script>
 
 <template>
   <h3 class="text-3xl font-bold mb-4">{{ props.formTitle }}</h3>
 
   <UForm
-    @submit="emit('submitHandler', $event, state)"
+    @submit="formSubmitHandler($event)"
     class="space-y-4"
     :schema="schema"
     :state="state"
+    ref="form"
   >
     <UFormGroup label="Email" name="email">
       <UInput v-model="state.email" />
