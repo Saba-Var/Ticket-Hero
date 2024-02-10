@@ -8,4 +8,9 @@ export default defineNuxtConfig({
     },
   },
   modules: ['@nuxt/ui'],
+  runtimeConfig: {
+    public: {
+      BACKEND_API_URL: process.env.BACKEND_API_URL,
+    },
+  },
 })

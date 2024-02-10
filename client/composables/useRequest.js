@@ -1,5 +1,5 @@
 import { useNotification } from '~/composables/useNotification'
-import { ref, toRefs, reactive } from 'vue'
+import { ref, toRefs } from 'vue'
 
 export const useRequest = ({
   showErrorNotification = true,
@@ -10,9 +10,8 @@ export const useRequest = ({
     statusCode: ref(null),
     loading: ref(false),
     errors: ref([]),
+    data: ref(null),
   })
-
-  const data = reactive({})
 
   const { emitErrorToast } = useNotification()
 
@@ -26,12 +25,17 @@ export const useRequest = ({
     state.loading.value = true
     try {
       const response = await request()
-      state.statusCode.value = response.status
-      data.value = response.data
-      if (options.onSuccess) {
-        options.onSuccess(response)
-      } else if (onSuccess) {
-        onSuccess(response)
+
+      if (response) {
+        state.statusCode.value = response.status
+        state.data.value = response.data
+        if (options.onSuccess) {
+          options.onSuccess(response)
+        } else if (onSuccess) {
+          onSuccess(response)
+        }
+      } else {
+        throw new Error('Request failed!')
       }
     } catch (error) {
       if (error?.response) {
@@ -51,5 +55,5 @@ export const useRequest = ({
     }
   }
 
-  return { sendRequest, ...state, data }
+  return { sendRequest, ...state }
 }
